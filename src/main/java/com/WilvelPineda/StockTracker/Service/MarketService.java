@@ -1,38 +1,39 @@
 package com.WilvelPineda.StockTracker.Service;
 
-import com.WilvelPineda.StockTracker.Client.FinnhubClient;
 import com.WilvelPineda.StockTracker.DTO.Response.MarketAssetResponse;
-import com.WilvelPineda.StockTracker.DTO.Response.QuoteResponse;
 import com.WilvelPineda.StockTracker.Entity.Asset;
-import com.WilvelPineda.StockTracker.Model.AssetType;
+import com.WilvelPineda.StockTracker.Service.Price.PriceProvider;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class MarketService {
 
-    private final FinnhubClient finnhubClient;
 
-    public MarketService(FinnhubClient finnhubClient) {
-        this.finnhubClient = finnhubClient;
+    private final List<PriceProvider> providers;
+
+
+    public MarketService(List<PriceProvider> providers) {
+        this.providers = providers;
     }
+
 
     public MarketAssetResponse getMarketData(Asset asset)
             throws IOException, InterruptedException {
 
-        if (asset.getType() != AssetType.STOCK) {
-            throw new IllegalArgumentException( "Cannot get price for asset: " + asset.getSymbol());
-        }
 
-        QuoteResponse quote = finnhubClient.getQuote(asset.getSymbol());
+        return providers.stream()
+                .filter(provider -> provider.supports(asset))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "No provider found for "
+                                        + asset.getSymbol()
+                        )
+                )
+                .getPrice(asset);
 
-        return new MarketAssetResponse(
-                asset.getId(),
-                asset.getSymbol(),
-                asset.getName(),
-                asset.getType(),
-                quote.currentPrice()
-        );
     }
 }
