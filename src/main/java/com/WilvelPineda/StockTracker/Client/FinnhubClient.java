@@ -1,6 +1,6 @@
 package com.WilvelPineda.StockTracker.Client;
 
-import com.WilvelPineda.StockTracker.DTO.QuoteResponse;
+import com.WilvelPineda.StockTracker.DTO.Response.QuoteResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 import tools.jackson.databind.ObjectMapper;

@@ -1,0 +1,33 @@
+package com.WilvelPineda.StockTracker.Controller;
+
+import com.WilvelPineda.StockTracker.DTO.Request.CreateAssetRequest;
+import com.WilvelPineda.StockTracker.DTO.Response.AssetResponse;
+import com.WilvelPineda.StockTracker.Entity.Asset;
+import com.WilvelPineda.StockTracker.Service.AssetService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/assets")
+public class AssetController {
+
+    private final AssetService assetService;
+
+    public AssetController(AssetService assetService) {
+        this.assetService = assetService;
+    }
+
+    @GetMapping
+    public List<AssetResponse> getAssets() {
+
+        return assetService.getAssets();
+
+    }
+
+    @PostMapping
+    public AssetResponse createAsset(@RequestBody CreateAssetRequest request) {
+        return assetService.createAsset(request);
+    }
+
+}

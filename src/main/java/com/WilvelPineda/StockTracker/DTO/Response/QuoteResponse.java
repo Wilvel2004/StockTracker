@@ -1,4 +1,4 @@
-package com.WilvelPineda.StockTracker.DTO;
+package com.WilvelPineda.StockTracker.DTO.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,7 +15,10 @@ public record QuoteResponse(@JsonProperty("c")
                             double openPrice,
 
                             @JsonProperty("pc")
-                            double previousClose
+                            double previousClose,
+
+                            @JsonProperty("t")
+                            long timestamp
 ) {
 
 }
