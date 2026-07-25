@@ -4,9 +4,10 @@ import com.WilvelPineda.StockTracker.Model.AssetType;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "assets")
 public class Asset {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String symbol;
