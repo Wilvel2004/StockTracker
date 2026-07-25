@@ -2,6 +2,7 @@ package com.WilvelPineda.StockTracker.Service;
 
 import com.WilvelPineda.StockTracker.Client.FinnhubClient;
 import com.WilvelPineda.StockTracker.DTO.QuoteResponse;
+import com.WilvelPineda.StockTracker.DTO.StockResponse;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,9 +15,18 @@ public class StockService {
          this.finnhubClient = finnhubClient;
      }
 
-    public QuoteResponse getStock(String symbol)
+    public StockResponse getStock(String symbol)
             throws IOException, InterruptedException {
 
-        return finnhubClient.getQuote(symbol);
+        QuoteResponse quote = finnhubClient.getQuote(symbol);
+
+        return new StockResponse(
+                symbol,
+                quote.currentPrice(),
+                quote.highPrice(),
+                quote.lowPrice(),
+                quote.openPrice(),
+                quote.previousClose()
+        );
     }
 }

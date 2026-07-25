@@ -15,7 +15,10 @@ public record QuoteResponse(@JsonProperty("c")
                             double openPrice,
 
                             @JsonProperty("pc")
-                            double previousClose
+                            double previousClose,
+
+                            @JsonProperty("t")
+                            long timestamp
 ) {
 
 }
