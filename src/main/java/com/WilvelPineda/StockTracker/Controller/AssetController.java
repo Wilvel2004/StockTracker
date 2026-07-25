@@ -39,4 +39,22 @@ public class AssetController {
         return assetService.getMarketAssets();
     }
 
+    @GetMapping("/{id}")
+    public AssetResponse getAssetById(
+            @PathVariable Long id
+    ) {
+
+        return assetService.getAssetById(id);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAsset(
+            @PathVariable Long id
+    ) {
+
+        assetService.deleteAsset(id);
+
+    }
+
 }

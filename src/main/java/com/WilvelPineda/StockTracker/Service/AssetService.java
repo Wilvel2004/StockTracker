@@ -87,4 +87,36 @@ public class AssetService {
 
         return responses;
     }
+
+    public AssetResponse getAssetById(Long id) {
+
+        Asset asset = assetRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Asset not found with id: " + id
+                        )
+                );
+
+
+        return new AssetResponse(
+                asset.getId(),
+                asset.getSymbol(),
+                asset.getName(),
+                asset.getType(),
+                asset.getMarketId()
+        );
+    }
+
+    public void deleteAsset(Long id) {
+
+        if (!assetRepository.existsById(id)) {
+
+            throw new IllegalArgumentException(
+                    "Asset not found with id: " + id
+            );
+        }
+
+
+        assetRepository.deleteById(id);
+    }
 }
