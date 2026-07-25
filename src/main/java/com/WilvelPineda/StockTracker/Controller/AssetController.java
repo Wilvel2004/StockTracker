@@ -2,10 +2,12 @@ package com.WilvelPineda.StockTracker.Controller;
 
 import com.WilvelPineda.StockTracker.DTO.Request.CreateAssetRequest;
 import com.WilvelPineda.StockTracker.DTO.Response.AssetResponse;
+import com.WilvelPineda.StockTracker.DTO.Response.MarketAssetResponse;
 import com.WilvelPineda.StockTracker.Entity.Asset;
 import com.WilvelPineda.StockTracker.Service.AssetService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,6 +30,13 @@ public class AssetController {
     @PostMapping
     public AssetResponse createAsset(@RequestBody CreateAssetRequest request) {
         return assetService.createAsset(request);
+    }
+
+    @GetMapping("/market")
+    public List<MarketAssetResponse> getMarketAssets()
+            throws IOException, InterruptedException {
+
+        return assetService.getMarketAssets();
     }
 
 }

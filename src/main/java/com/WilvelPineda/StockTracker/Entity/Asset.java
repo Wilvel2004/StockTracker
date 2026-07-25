@@ -27,6 +27,9 @@ public class Asset {
         this.type = type;
     }
 
+    public Asset() {
+    }
+
 
     public Long getId() {
         return id;
