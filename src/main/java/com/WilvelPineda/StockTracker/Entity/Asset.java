@@ -17,14 +17,21 @@ public class Asset {
     @Enumerated(EnumType.STRING)
     private AssetType type;
 
+    private String marketId;
+
     public Asset(
             String symbol,
             String name,
-            AssetType type
+            AssetType type,
+            String marketId
     ) {
         this.symbol = symbol;
         this.name = name;
         this.type = type;
+        this.marketId = marketId;
+    }
+
+    public Asset() {
     }
 
 
@@ -46,5 +53,8 @@ public class Asset {
     public AssetType getType() {
         return type;
     }
+
+
+    public String getMarketId() {return marketId;}
 
 }

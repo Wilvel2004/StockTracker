@@ -8,7 +8,8 @@ public record AssetResponse(
         Long id,
         String symbol,
         String name,
-        AssetType type
+        AssetType type,
+        String marketId
 
 ) {
 }
