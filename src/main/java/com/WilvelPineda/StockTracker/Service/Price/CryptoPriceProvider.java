@@ -1,8 +1,7 @@
 package com.WilvelPineda.StockTracker.Service.Price;
 
-import com.WilvelPineda.StockTracker.Client.FinnhubClient;
+import com.WilvelPineda.StockTracker.Client.CoinGeckoClient;
 import com.WilvelPineda.StockTracker.DTO.Response.MarketAssetResponse;
-import com.WilvelPineda.StockTracker.DTO.Response.QuoteResponse;
 import com.WilvelPineda.StockTracker.Entity.Asset;
 import com.WilvelPineda.StockTracker.Model.AssetType;
 import org.springframework.stereotype.Service;
@@ -10,19 +9,21 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class StockPriceProvider implements PriceProvider {
+public class CryptoPriceProvider implements PriceProvider {
 
-    private final FinnhubClient finnhubClient;
 
-    public StockPriceProvider(FinnhubClient finnhubClient) {
-        this.finnhubClient = finnhubClient;
+    private final CoinGeckoClient coinGeckoClient;
+
+
+    public CryptoPriceProvider(CoinGeckoClient coinGeckoClient) {
+        this.coinGeckoClient = coinGeckoClient;
     }
 
 
     @Override
     public boolean supports(Asset asset) {
 
-        return asset.getType() == AssetType.STOCK;
+        return asset.getType() == AssetType.CRYPTO;
 
     }
 
@@ -32,8 +33,10 @@ public class StockPriceProvider implements PriceProvider {
             throws IOException, InterruptedException {
 
 
-        QuoteResponse quote =
-                finnhubClient.getQuote(asset.getMarketId());
+        double price =
+                coinGeckoClient.getPrice(
+                        asset.getMarketId()
+                );
 
 
         return new MarketAssetResponse(
@@ -41,7 +44,7 @@ public class StockPriceProvider implements PriceProvider {
                 asset.getSymbol(),
                 asset.getName(),
                 asset.getType(),
-                quote.currentPrice()
+                price
         );
     }
 }

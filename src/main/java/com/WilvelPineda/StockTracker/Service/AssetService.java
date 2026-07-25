@@ -32,7 +32,8 @@ public class AssetService {
         Asset asset = new Asset(
                 request.symbol(),
                 request.name(),
-                request.type()
+                request.type(),
+                request.marketId()
         );
 
         Asset savedAsset = assetRepository.save(asset);
@@ -41,7 +42,8 @@ public class AssetService {
                 savedAsset.getId(),
                 savedAsset.getSymbol(),
                 savedAsset.getName(),
-                savedAsset.getType()
+                savedAsset.getType(),
+                savedAsset.getMarketId()
         );
     }
 
@@ -59,7 +61,8 @@ public class AssetService {
                             asset.getId(),
                             asset.getSymbol(),
                             asset.getName(),
-                            asset.getType()
+                            asset.getType(),
+                            asset.getMarketId()
                     )
             );
         }

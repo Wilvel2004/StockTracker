@@ -4,5 +4,6 @@ import com.WilvelPineda.StockTracker.Model.AssetType;
 
 public record CreateAssetRequest(String symbol,
                                  String name,
-                                 AssetType type) {
+                                 AssetType type,
+                                 String marketId) {
 }
