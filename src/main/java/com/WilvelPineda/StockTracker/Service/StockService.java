@@ -1,8 +1,8 @@
 package com.WilvelPineda.StockTracker.Service;
 
 import com.WilvelPineda.StockTracker.Client.FinnhubClient;
-import com.WilvelPineda.StockTracker.DTO.QuoteResponse;
-import com.WilvelPineda.StockTracker.DTO.StockResponse;
+import com.WilvelPineda.StockTracker.DTO.Response.QuoteResponse;
+import com.WilvelPineda.StockTracker.DTO.Response.StockResponse;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

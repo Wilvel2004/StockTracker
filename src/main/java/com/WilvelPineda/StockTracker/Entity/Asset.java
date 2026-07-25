@@ -18,12 +18,10 @@ public class Asset {
     private AssetType type;
 
     public Asset(
-            Long id,
             String symbol,
             String name,
             AssetType type
     ) {
-        this.id = id;
         this.symbol = symbol;
         this.name = name;
         this.type = type;

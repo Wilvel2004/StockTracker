@@ -1,7 +1,6 @@
 package com.WilvelPineda.StockTracker.Controller;
 
-import com.WilvelPineda.StockTracker.DTO.QuoteResponse;
-import com.WilvelPineda.StockTracker.DTO.StockResponse;
+import com.WilvelPineda.StockTracker.DTO.Response.StockResponse;
 import com.WilvelPineda.StockTracker.Service.StockService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

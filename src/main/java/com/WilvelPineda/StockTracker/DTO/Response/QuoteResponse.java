@@ -1,4 +1,4 @@
-package com.WilvelPineda.StockTracker.DTO;
+package com.WilvelPineda.StockTracker.DTO.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
