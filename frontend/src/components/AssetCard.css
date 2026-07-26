@@ -1,0 +1,41 @@
+.asset-card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+
+    transition:.2s;
+
+}
+
+.asset-card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.asset-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.asset-name{
+
+    color:#666;
+
+}
+
+.asset-price{
+
+    color:#0a7d35;
+
+}
