@@ -1,0 +1,9 @@
+package com.WilvelPineda.StockTracker.DTO.Response;
+
+import com.WilvelPineda.StockTracker.Model.AssetType;
+
+public record AssetCatalogResponse(Long id,
+                                   String symbol,
+                                   String name,
+                                   AssetType type) {
+}
