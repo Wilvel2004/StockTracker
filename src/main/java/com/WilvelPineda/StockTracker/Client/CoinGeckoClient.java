@@ -53,9 +53,25 @@ public class CoinGeckoClient {
                 );
 
 
-        Object price = result
-                .get(marketId)
-                .get("usd");
+        Map<String, Object> crypto = result.get(marketId);
+
+        if (crypto == null) {
+
+            throw new IllegalArgumentException(
+                    "Crypto not found in CoinGecko: " + marketId
+            );
+        }
+
+
+        Object price = crypto.get("usd");
+
+        if (price == null) {
+
+            throw new IllegalArgumentException(
+                    "USD price not found for: " + marketId
+            );
+        }
+
 
         return Double.parseDouble(price.toString());
     }
