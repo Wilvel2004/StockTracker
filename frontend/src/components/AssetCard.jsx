@@ -1,31 +1,52 @@
 import "./AssetCard.css";
 
-function AssetCard({ asset }) {
+function AssetCard({ asset, onDelete }) {
+
+    const formattedPrice = Number(asset.currentPrice).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
 
     return (
-        <div className="asset-card">
+        <article className="asset-card">
 
-            <div className="asset-header">
+            <div className="asset-card-top">
 
-                <h2>{asset.symbol}</h2>
+                <div>
+                    <p className="asset-symbol">{asset.symbol}</p>
+                    <h3 className="asset-name">{asset.name}</h3>
+                </div>
 
-                <span>
+                <span
+                    className={`asset-badge ${
+                        asset.type === "CRYPTO" ? "crypto" : "stock"
+                    }`}
+                >
                     {asset.type}
                 </span>
 
             </div>
 
+            <div className="asset-card-bottom">
 
-            <p>
-                {asset.name}
-            </p>
+                <span className="asset-label">
+                    Current price
+                </span>
 
+                <strong className="asset-price">
+                    ${formattedPrice}
+                </strong>
 
-            <h3>
-                ${Number(asset.currentPrice).toFixed(2)}
-            </h3>
+                <button
+                    className="delete-btn"
+                    onClick={() => onDelete(asset.id)}
+                >
+                    🗑 Eliminar
+                </button>
 
-        </div>
+            </div>
+
+        </article>
     );
 }
 
