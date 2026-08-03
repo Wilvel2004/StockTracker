@@ -18,7 +18,10 @@ public record QuoteResponse(@JsonProperty("c")
                             double previousClose,
 
                             @JsonProperty("t")
-                            long timestamp
+                            long timestamp,
+
+                            @JsonProperty("dp")
+                            double changePercent
 ) {
 
 }
