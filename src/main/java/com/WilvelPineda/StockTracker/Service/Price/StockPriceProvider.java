@@ -41,7 +41,8 @@ public class StockPriceProvider implements PriceProvider {
                 asset.getSymbol(),
                 asset.getName(),
                 asset.getType(),
-                quote.currentPrice()
+                quote.currentPrice(),
+                quote.changePercent()
         );
     }
 }

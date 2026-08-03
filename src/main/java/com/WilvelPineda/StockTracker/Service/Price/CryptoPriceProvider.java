@@ -44,7 +44,8 @@ public class CryptoPriceProvider implements PriceProvider {
                 asset.getSymbol(),
                 asset.getName(),
                 asset.getType(),
-                price
+                price,
+                0
         );
     }
 }

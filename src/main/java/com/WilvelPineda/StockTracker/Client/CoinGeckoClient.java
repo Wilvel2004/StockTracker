@@ -39,12 +39,14 @@ public class CoinGeckoClient {
                 .build();
 
 
+
         HttpResponse<String> response =
                 CLIENT.send(
                         request,
                         HttpResponse.BodyHandlers.ofString()
                 );
 
+        System.out.println(response.body());
 
         Map<String, Map<String, Object>> result =
                 objectMapper.readValue(

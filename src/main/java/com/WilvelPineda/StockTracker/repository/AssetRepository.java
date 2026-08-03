@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, Long> {
-
+    boolean existsBySymbol(String symbol);
 }

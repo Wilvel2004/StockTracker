@@ -173,3 +173,11 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+.dashboard-toolbar{
+
+    margin: 2rem auto;
+
+    padding: 0 1rem;
+
+}
