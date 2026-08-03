@@ -1,5 +1,6 @@
 package com.WilvelPineda.StockTracker.Client;
 
+import com.WilvelPineda.StockTracker.DTO.Response.CryptoPriceResponse;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
@@ -23,14 +24,15 @@ public class CoinGeckoClient {
     }
 
 
-    public double getPrice(String marketId)
+    public CryptoPriceResponse getPrice(String marketId)
             throws IOException, InterruptedException {
 
 
         String url =
                 "https://api.coingecko.com/api/v3/simple/price?ids="
                         + marketId
-                        + "&vs_currencies=usd";
+                        + "&vs_currencies=usd"
+                        + "&include_24hr_change=true";
 
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -55,6 +57,7 @@ public class CoinGeckoClient {
 
         Map<String, Object> crypto = result.get(marketId);
 
+
         if (crypto == null) {
 
             throw new IllegalArgumentException(
@@ -64,6 +67,8 @@ public class CoinGeckoClient {
 
 
         Object price = crypto.get("usd");
+        Object change = crypto.get("usd_24h_change");
+
 
         if (price == null) {
 
@@ -73,6 +78,17 @@ public class CoinGeckoClient {
         }
 
 
-        return Double.parseDouble(price.toString());
+        if (change == null) {
+
+            throw new IllegalArgumentException(
+                    "24h change not found for: " + marketId
+            );
+        }
+
+
+        return new CryptoPriceResponse(
+                Double.parseDouble(price.toString()),
+                Double.parseDouble(change.toString())
+        );
     }
 }

@@ -7,6 +7,28 @@ function AssetCard({ asset, onDelete }) {
         maximumFractionDigits: 2,
     });
 
+
+    const change = Number(asset.changePercent);
+
+    const formattedChange = Math.abs(change).toFixed(2);
+
+
+    const changeClass =
+        change > 0
+            ? "positive"
+            : change < 0
+                ? "negative"
+                : "neutral";
+
+
+    const changeIcon =
+        change > 0
+            ? "▲"
+            : change < 0
+                ? "▼"
+                : "➖";
+
+
     return (
         <article className="asset-card">
 
@@ -33,9 +55,25 @@ function AssetCard({ asset, onDelete }) {
                     Current price
                 </span>
 
-                <strong className="asset-price">
-                    ${formattedPrice}
-                </strong>
+                <div className="price-row">
+
+                    <strong className="asset-price">
+                        ${formattedPrice}
+                    </strong>
+
+                    <div className={`asset-change ${changeClass}`}>
+                        <span>
+                            {changeIcon}
+                        </span>
+
+                        <span>
+                            {change > 0 && "+"}
+                            {change < 0 && "-"}
+                            {formattedChange}%
+                        </span>
+                    </div>
+
+                </div>
 
                 <button
                     className="delete-btn"

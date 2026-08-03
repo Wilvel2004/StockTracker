@@ -1,6 +1,7 @@
 package com.WilvelPineda.StockTracker.Service.Price;
 
 import com.WilvelPineda.StockTracker.Client.CoinGeckoClient;
+import com.WilvelPineda.StockTracker.DTO.Response.CryptoPriceResponse;
 import com.WilvelPineda.StockTracker.DTO.Response.MarketAssetResponse;
 import com.WilvelPineda.StockTracker.Entity.Asset;
 import com.WilvelPineda.StockTracker.Model.AssetType;
@@ -33,7 +34,7 @@ public class CryptoPriceProvider implements PriceProvider {
             throws IOException, InterruptedException {
 
 
-        double price =
+        CryptoPriceResponse crypto =
                 coinGeckoClient.getPrice(
                         asset.getMarketId()
                 );
@@ -44,7 +45,8 @@ public class CryptoPriceProvider implements PriceProvider {
                 asset.getSymbol(),
                 asset.getName(),
                 asset.getType(),
-                price
+                crypto.price(),
+                crypto.changePercent()
         );
     }
 }

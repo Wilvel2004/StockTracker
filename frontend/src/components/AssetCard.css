@@ -97,3 +97,35 @@
     background: #dc2626;
     transform: translateY(-2px);
 }
+
+.price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+
+.asset-change {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+.asset-change.positive {
+    color: #16a34a;
+}
+
+
+.asset-change.negative {
+    color: #dc2626;
+}
+
+
+.asset-change.neutral {
+    color: #6b7280;
+}

@@ -4,6 +4,8 @@ import com.WilvelPineda.StockTracker.DTO.Request.CreateAssetRequest;
 import com.WilvelPineda.StockTracker.DTO.Response.AssetResponse;
 import com.WilvelPineda.StockTracker.DTO.Response.MarketAssetResponse;
 import com.WilvelPineda.StockTracker.Entity.Asset;
+import com.WilvelPineda.StockTracker.Entity.AssetCatalog;
+import com.WilvelPineda.StockTracker.repository.AssetCatalogRepository;
 import com.WilvelPineda.StockTracker.repository.AssetRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +18,49 @@ public class AssetService {
 
     private final AssetRepository assetRepository;
     private final MarketService marketService;
-
+    private final AssetCatalogRepository assetCatalogRepository;
 
     public AssetService(
             AssetRepository assetRepository,
-            MarketService marketService
+            MarketService marketService,
+            AssetCatalogRepository assetCatalogRepository
     ) {
         this.assetRepository = assetRepository;
         this.marketService = marketService;
+        this.assetCatalogRepository = assetCatalogRepository;
     }
 
 
     public AssetResponse createAsset(CreateAssetRequest request) {
 
+
+        AssetCatalog catalog = assetCatalogRepository
+                .findById(request.catalogId())
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Catalog asset not found"
+                        )
+                );
+
+
+        if(assetRepository.existsBySymbol(catalog.getSymbol())){
+
+            throw new IllegalArgumentException(
+                    "Asset already exists"
+            );
+        }
+
+
         Asset asset = new Asset(
-                request.symbol(),
-                request.name(),
-                request.type(),
-                request.marketId()
+                catalog.getSymbol(),
+                catalog.getName(),
+                catalog.getType(),
+                catalog.getMarketId()
         );
 
+
         Asset savedAsset = assetRepository.save(asset);
+
 
         return new AssetResponse(
                 savedAsset.getId(),
@@ -46,7 +70,6 @@ public class AssetService {
                 savedAsset.getMarketId()
         );
     }
-
 
     public List<AssetResponse> getAssets() {
 

@@ -1,0 +1,222 @@
+.asset-search {
+
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    position: relative;
+
+}
+
+.search-box {
+
+    position: relative;
+
+}
+
+.search-box input {
+
+    width: 100%;
+    padding: 15px 18px 15px 50px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: white;
+
+    font-size: 1rem;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+    transition: .25s;
+
+}
+
+.search-box input:focus {
+
+    outline: none;
+
+    box-shadow: 0 12px 30px rgba(37,99,235,.18);
+
+}
+
+.search-icon {
+
+    position: absolute;
+
+    left: 18px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #7c8798;
+
+}
+
+.search-results {
+
+    margin-top: 12px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.10);
+
+}
+
+.search-result {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 16px 20px;
+
+    transition: .2s;
+
+}
+
+.search-result {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    transition: all .2s ease;
+
+}
+
+.search-result:hover {
+
+    background: #f8fafc;
+    transform: translateX(5px);
+
+}
+
+.search-result:not(:last-child) {
+
+    border-bottom: 1px solid #edf1f5;
+
+}
+
+.asset-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+.asset-main {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+.asset-main strong {
+
+    font-size: 1rem;
+
+}
+
+.asset-main span {
+
+    color: #6b7280;
+
+}
+
+.asset-type {
+
+    padding: 5px 12px;
+
+    border-radius: 999px;
+
+    font-size: .75rem;
+
+    font-weight: 600;
+
+}
+
+.asset-type.stock {
+
+    background: #e8efff;
+
+    color: #2563eb;
+
+}
+
+.asset-type.crypto {
+
+    background: #e8f8ef;
+
+    color: #16a34a;
+
+}
+
+.add-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .2s;
+
+}
+
+.add-button:hover {
+
+    background: #1d4ed8;
+
+}
+
+.search-results {
+
+    animation: fadeIn .18s ease;
+
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+        transform: translateY(-8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+
+}
