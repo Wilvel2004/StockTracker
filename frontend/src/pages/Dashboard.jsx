@@ -81,7 +81,7 @@
 
             cryptos.forEach(asset => {
 
-                text += `${asset.name}: ${asset.currentPrice}\n`;
+                text += `${asset.symbol}: $${asset.currentPrice.toFixed(2)} ${asset.changePercent >= 0 ? "▲" : "▼"} ${asset.changePercent >= 0 ? "+" : ""}${asset.changePercent.toFixed(2)}%\n`;
 
             });
 
@@ -99,7 +99,7 @@
 
             stocks.forEach(asset => {
 
-                text += `${asset.symbol}: ${asset.currentPrice}\n`;
+                text += `${asset.symbol}: $${asset.currentPrice.toFixed(2)} ${asset.changePercent >= 0 ? "▲" : "▼"} ${asset.changePercent >= 0 ? "+" : ""}${asset.changePercent.toFixed(2)}%\n`;
 
             });
 
