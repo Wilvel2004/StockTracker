@@ -11,6 +11,8 @@
         const [loading, setLoading] = useState(true);
         const [error, setError] = useState("");
         const [showModal, setShowModal] = useState(false);
+        const [toastMessage, setToastMessage] = useState("");
+        const [toastTimer, setToastTimer] = useState(null);
 
         const loadAssets = useCallback(async () => {
             try {
@@ -67,59 +69,127 @@
 
     }
 
-    async function copyAssetsToClipboard() {
+function showToastMessage(message) {
 
-        const cryptos = assets.filter(asset => asset.type === "CRYPTO");
+    setToastMessage(message);
 
-        const stocks = assets.filter(asset => asset.type === "STOCK");
+    if (toastTimer) {
+        clearTimeout(toastTimer);
+    }
 
-        let text = "";
+    const timer = setTimeout(() => {
+        setToastMessage("");
+    }, 2500);
 
-        if (cryptos.length > 0) {
+    setToastTimer(timer);
+}
 
-            text += "Cryptos\n\n";
+async function copyAssetsToClipboard(type) {
 
-            cryptos.forEach(asset => {
+    let filteredAssets = assets;
 
-                text += `${asset.symbol}: $${asset.currentPrice.toFixed(2)} ${asset.changePercent >= 0 ? "▲" : "▼"} ${asset.changePercent >= 0 ? "+" : ""}${asset.changePercent.toFixed(2)}%\n`;
 
-            });
+    if (type === "STOCK") {
 
-        }
-
-        if (stocks.length > 0) {
-
-            if (cryptos.length > 0) {
-
-                text += "\n";
-
-            }
-
-            text += "Stocks\n\n";
-
-            stocks.forEach(asset => {
-
-                text += `${asset.symbol}: $${asset.currentPrice.toFixed(2)} ${asset.changePercent >= 0 ? "▲" : "▼"} ${asset.changePercent >= 0 ? "+" : ""}${asset.changePercent.toFixed(2)}%\n`;
-
-            });
-
-        }
-
-        try {
-
-            await navigator.clipboard.writeText(text);
-
-            alert("✅ Lista copiada al portapapeles");
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("No se pudo copiar la lista.");
-
-        }
+        filteredAssets = assets.filter(
+            asset => asset.type === "STOCK"
+        );
 
     }
+
+
+    if (type === "CRYPTO") {
+
+        filteredAssets = assets.filter(
+            asset => asset.type === "CRYPTO"
+        );
+
+    }
+
+
+    const cryptos = filteredAssets.filter(
+        asset => asset.type === "CRYPTO"
+    );
+
+
+    const stocks = filteredAssets.filter(
+        asset => asset.type === "STOCK"
+    );
+
+
+    let text = "📊 StockTracker\n\n";
+
+
+    function formatAsset(asset) {
+
+        const change = Number(asset.changePercent ?? 0);
+
+        const arrow =
+            change > 0
+                ? "▲"
+                : change < 0
+                    ? "▼"
+                    : "➖";
+
+
+        const sign =
+            change > 0
+                ? "+"
+                : "";
+
+
+        return `${asset.symbol}: $${Number(asset.currentPrice).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        )} ${arrow} ${sign}${change.toFixed(2)}%\n\n`;
+    }
+
+
+    if (stocks.length > 0) {
+
+        text += "📈 Stocks\n\n";
+
+        stocks.forEach(asset => {
+            text += formatAsset(asset);
+        });
+
+    }
+
+
+    if (cryptos.length > 0) {
+
+        if (stocks.length > 0) {
+            text += "\n";
+        }
+
+        text += "🪙 Cryptos\n\n";
+
+        cryptos.forEach(asset => {
+            text += formatAsset(asset);
+        });
+
+    }
+
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+        showToastMessage("✅ Lista copiada al portapapeles");
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToastMessage("❌ No se pudo copiar la lista.");
+
+    }
+
+}
 
         return (
             <div className="dashboard-page">
@@ -136,12 +206,28 @@
                         <button className="btn btn-secondary" onClick={loadAssets}>
                             Actualizar precios
                         </button>
-                        <button
-                            className="btn btn-secondary"
-                            onClick={copyAssetsToClipboard}
+                        <select
+                            className="copy-select"
+                            onChange={(e) => copyAssetsToClipboard(e.target.value)}
+                            defaultValue=""
                         >
-                            Copiar lista
-                        </button>
+                            <option value="" disabled>
+                                Copiar lista
+                            </option>
+
+                            <option value="ALL">
+                                📊 Todo
+                            </option>
+
+                            <option value="STOCK">
+                                📈 Stocks
+                            </option>
+
+                            <option value="CRYPTO">
+                                🪙 Cryptos
+                            </option>
+
+                        </select>
                         <button
                             className="btn btn-primary"
                             onClick={() => setShowModal(true)}
@@ -215,6 +301,13 @@
             />
 
         )
+    }
+    {
+    toastMessage && (
+        <div className="toast">
+            {toastMessage}
+        </div>
+    )
     }
             </div>
         );
